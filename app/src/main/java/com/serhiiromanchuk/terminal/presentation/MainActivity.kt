@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                         is TerminalScreenState.Initial -> {}
 
                         is TerminalScreenState.Content -> {
-                            Log.d("MyTag", currentState.barList.toString())
+                            Terminal(barList = currentState.barList)
                         }
                     }
                 }
