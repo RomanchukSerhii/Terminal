@@ -2,8 +2,9 @@ package com.serhiiromanchuk.terminal.data.mapper
 
 import com.serhiiromanchuk.terminal.data.models.ResultsResponseDto
 import com.serhiiromanchuk.terminal.domain.entity.Bar
+import javax.inject.Inject
 
-class BarsMapper {
+class BarsMapper @Inject constructor() {
 
     fun mapResponseToBars(responseDto: ResultsResponseDto): List<Bar> {
         val result = mutableListOf<Bar>()
