@@ -11,7 +11,7 @@ class TerminalRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val mapper: BarsMapper
 ): TerminalRepository {
-    override fun getBarList(): StateFlow<List<Bar>> {
-        TODO("Not yet implemented")
+    override suspend fun getBarList(): List<Bar> {
+        return mapper.mapResponseToBars(apiService.loadBars())
     }
 }

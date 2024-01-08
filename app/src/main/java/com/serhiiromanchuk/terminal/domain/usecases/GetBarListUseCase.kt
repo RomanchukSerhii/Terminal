@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetBarListUseCase @Inject constructor(
     private val repository: TerminalRepository
 ) {
-    operator fun invoke(): StateFlow<List<Bar>> {
+    suspend operator fun invoke(): List<Bar> {
         return repository.getBarList()
     }
 }
