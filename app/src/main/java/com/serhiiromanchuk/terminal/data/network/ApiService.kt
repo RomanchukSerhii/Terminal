@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("aggs/ticker/AAPL/range/1/day/2022-01-09/2023-01-09?limit=120&apiKey=nHyNZGJs2LwKi1tOk9U49IXbVtLm4XRM")
+    @GET("aggs/ticker/AAPL/range/1/hour/2022-01-09/2023-01-09?adjusted=true&sort=desc&limit=50000&apiKey=nHyNZGJs2LwKi1tOk9U49IXbVtLm4XRM")
     suspend fun loadBars(): ResultsResponseDto
 }
