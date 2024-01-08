@@ -1,4 +1,4 @@
-package com.serhiiromanchuk.terminal
+package com.serhiiromanchuk.terminal.presentation
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
