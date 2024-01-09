@@ -1,8 +1,9 @@
 package com.serhiiromanchuk.terminal.domain.repository
 
 import com.serhiiromanchuk.terminal.domain.entity.Bar
+import com.serhiiromanchuk.terminal.presentation.TimeFrame
 import kotlinx.coroutines.flow.StateFlow
 
 interface TerminalRepository {
-    suspend fun getBarList(): List<Bar>
+    suspend fun getBarList(timeFrame: TimeFrame): List<Bar>
 }

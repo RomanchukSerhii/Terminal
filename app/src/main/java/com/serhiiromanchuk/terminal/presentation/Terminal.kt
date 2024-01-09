@@ -4,10 +4,17 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.AssistChipDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -20,6 +27,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextMeasurer
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.drawText
@@ -27,6 +35,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.serhiiromanchuk.terminal.R
 import kotlin.math.roundToInt
 
 
@@ -51,7 +60,9 @@ fun Terminal(
             TerminalContent(
                 modifier = modifier,
                 terminalState = terminalState,
-                onTerminalStateChange = { terminalState.value = it }
+                onTerminalStateChange = { terminalState.value = it },
+                timeFrame = currentState.timeFrame,
+                onTimeFrameClick = { viewModel.loadBars(it) }
             )
         }
     }
@@ -61,7 +72,9 @@ fun Terminal(
 fun TerminalContent(
     modifier: Modifier = Modifier,
     terminalState: State<TerminalState>,
-    onTerminalStateChange: (TerminalState) -> Unit
+    onTerminalStateChange: (TerminalState) -> Unit,
+    timeFrame: TimeFrame,
+    onTimeFrameClick: (TimeFrame) -> Unit
 ) {
     Chart(
         modifier = modifier,
@@ -76,6 +89,8 @@ fun TerminalContent(
             lastPrice = it.close
         )
     }
+    
+    TimeFrames(selectedFrame = timeFrame, onTimeFrameClick = onTimeFrameClick)
 }
 
 @Composable
@@ -89,6 +104,38 @@ fun LoadingScreen(
         contentAlignment = Alignment.Center
     ) {
         CircularProgressIndicator()
+    }
+}
+
+@Composable
+fun TimeFrames(
+    modifier: Modifier = Modifier,
+    selectedFrame: TimeFrame,
+    onTimeFrameClick: (TimeFrame) -> Unit
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        TimeFrame.entries.forEach { timeFrame ->
+            val labelResId = when (timeFrame) {
+                TimeFrame.MIN_5 -> R.string.timeframe_5_minutes
+                TimeFrame.MIN_15 -> R.string.timeframe_15_minutes
+                TimeFrame.MIN_30 -> R.string.timeframe_30_minutes
+                TimeFrame.HOUR -> R.string.timeframe_1_hours
+            }
+            val isSelected = selectedFrame == timeFrame
+            AssistChip(
+                onClick = { onTimeFrameClick(timeFrame) },
+                label = { Text(text = stringResource(id = labelResId)) },
+                colors = AssistChipDefaults.assistChipColors(
+                    containerColor = if (isSelected) Color.White else Color.Black,
+                    labelColor = if (isSelected) Color.Black else Color.White
+                )
+            )
+        }
     }
 }
 

@@ -17,19 +17,25 @@ class TerminalViewModel @Inject constructor(
     private val _screenState = MutableStateFlow<TerminalScreenState>(TerminalScreenState.Initial)
     val screenState = _screenState.asStateFlow()
 
-    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        Log.d("TerminalViewModel", "Exception caught: $throwable")
+    private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
+        _screenState.value = lastScreenState
     }
+
+    private var lastScreenState: TerminalScreenState = TerminalScreenState.Initial
 
     init {
         loadBars()
     }
 
-    private fun loadBars() {
+    fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR) {
+        lastScreenState = _screenState.value
         _screenState.value = TerminalScreenState.Loading
         viewModelScope.launch(exceptionHandler) {
-            val barList = getBarListUseCase()
-            _screenState.value = TerminalScreenState.Content(barList = barList)
+            val barList = getBarListUseCase(timeFrame)
+            _screenState.value = TerminalScreenState.Content(
+                barList = barList,
+                timeFrame = timeFrame
+            )
         }
     }
 }
