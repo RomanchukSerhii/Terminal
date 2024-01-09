@@ -26,6 +26,7 @@ class TerminalViewModel @Inject constructor(
     }
 
     private fun loadBars() {
+        _screenState.value = TerminalScreenState.Loading
         viewModelScope.launch(exceptionHandler) {
             val barList = getBarListUseCase()
             _screenState.value = TerminalScreenState.Content(barList = barList)
