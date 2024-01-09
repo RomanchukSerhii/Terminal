@@ -13,18 +13,26 @@ import kotlin.math.roundToInt
 data class TerminalState(
     val barList: List<Bar>,
     val visibleBarSize: Int = 100,
-    val terminalWidth: Float = 0f,
+    val terminalWidth: Float = 1f,
+    val terminalHeight: Float = 1f,
     val scrolledBy: Float = 0f
 ) {
     val barWidth: Float
         get() = terminalWidth / visibleBarSize
 
-    val visibleBars: List<Bar>
+    private val visibleBars: List<Bar>
         get() {
             val startIndex = (scrolledBy / barWidth).roundToInt().coerceAtLeast(0)
             val endIndex = (startIndex + visibleBarSize).coerceAtMost(barList.size)
             return barList.subList(startIndex, endIndex)
         }
+
+    val max
+        get() = visibleBars.maxOf { it.high }
+    val min
+        get() = visibleBars.minOf { it.low }
+    val pxPerPoint
+        get() = terminalHeight / (max - min)
 
     companion object {
         val Saver: Saver<MutableState<TerminalState>, *> = Saver(
@@ -41,7 +49,7 @@ data class TerminalState(
                 val terminalState = TerminalState(
                     barList = values["barList"] as List<Bar>,
                     visibleBarSize = values["visibleBarSize"] as Int,
-                    terminalWidth = values["terminalWidth"]  as Float,
+                    terminalWidth = values["terminalWidth"] as Float,
                     scrolledBy = values["scrolledBy"] as Float
                 )
                 mutableStateOf(terminalState)
