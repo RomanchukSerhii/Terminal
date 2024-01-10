@@ -1,4 +1,4 @@
-package com.serhiiromanchuk.terminal.presentation
+package com.serhiiromanchuk.terminal.presentation.diagram
 
 import com.serhiiromanchuk.terminal.domain.entity.Bar
 

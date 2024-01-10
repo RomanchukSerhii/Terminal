@@ -1,11 +1,9 @@
-package com.serhiiromanchuk.terminal.presentation
+package com.serhiiromanchuk.terminal.presentation.diagram
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
-import androidx.compose.runtime.saveable.listSaver
 import androidx.compose.runtime.saveable.rememberSaveable
 import com.serhiiromanchuk.terminal.domain.entity.Bar
 import kotlin.math.roundToInt

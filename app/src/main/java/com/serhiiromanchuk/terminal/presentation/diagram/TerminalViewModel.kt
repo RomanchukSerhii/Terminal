@@ -1,4 +1,4 @@
-package com.serhiiromanchuk.terminal.presentation
+package com.serhiiromanchuk.terminal.presentation.diagram
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -12,8 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class TerminalViewModel @Inject constructor(
-    private val getBarListUseCase: GetBarListUseCase,
-    private val getTickerListUseCase: GetTickerListUseCase
+    private val getBarListUseCase: GetBarListUseCase
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow<TerminalScreenState>(TerminalScreenState.Initial)
@@ -27,10 +26,6 @@ class TerminalViewModel @Inject constructor(
 
     init {
         loadBars()
-        viewModelScope.launch {
-            val tickers = getTickerListUseCase()
-            Log.d("TerminalViewModel", tickers.toString())
-        }
     }
 
     fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR) {

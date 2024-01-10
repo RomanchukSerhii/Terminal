@@ -1,4 +1,4 @@
-package com.serhiiromanchuk.terminal.presentation
+package com.serhiiromanchuk.terminal.presentation.diagram
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.serhiiromanchuk.terminal.R
 import com.serhiiromanchuk.terminal.domain.entity.Bar
+import com.serhiiromanchuk.terminal.presentation.getApplicationComponent
 import java.util.Calendar
 import java.util.Locale
 import kotlin.math.roundToInt

@@ -4,7 +4,7 @@ import com.serhiiromanchuk.terminal.data.models.ResultsResponseDto
 import com.serhiiromanchuk.terminal.data.models.TickerResponseDto
 import com.serhiiromanchuk.terminal.domain.entity.Bar
 import com.serhiiromanchuk.terminal.domain.entity.Ticker
-import com.serhiiromanchuk.terminal.presentation.TimeFrame
+import com.serhiiromanchuk.terminal.presentation.diagram.TimeFrame
 import javax.inject.Inject
 
 class TerminalMapper @Inject constructor() {
