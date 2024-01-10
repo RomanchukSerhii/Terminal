@@ -1,11 +1,13 @@
 package com.serhiiromanchuk.terminal.data.mapper
 
 import com.serhiiromanchuk.terminal.data.models.ResultsResponseDto
+import com.serhiiromanchuk.terminal.data.models.TickerResponseDto
 import com.serhiiromanchuk.terminal.domain.entity.Bar
+import com.serhiiromanchuk.terminal.domain.entity.Ticker
 import com.serhiiromanchuk.terminal.presentation.TimeFrame
 import javax.inject.Inject
 
-class BarsMapper @Inject constructor() {
+class TerminalMapper @Inject constructor() {
 
     fun mapResponseToBars(responseDto: ResultsResponseDto): List<Bar> {
         val result = mutableListOf<Bar>()
@@ -19,6 +21,20 @@ class BarsMapper @Inject constructor() {
                 time = it.time
             )
             result.add(bar)
+        }
+
+        return result
+    }
+
+    fun mapTickerResponseToTickers(responseDto: TickerResponseDto): List<Ticker> {
+        val result = mutableListOf<Ticker>()
+
+        responseDto.tickerList.forEach {
+            val ticker = Ticker(
+                ticker = it.ticker,
+                name = it.name
+            )
+            result.add(ticker)
         }
 
         return result
