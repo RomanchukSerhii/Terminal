@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.serhiiromanchuk.terminal.R
 import com.serhiiromanchuk.terminal.domain.entity.Bar
+import com.serhiiromanchuk.terminal.presentation.composables.LoadingScreen
 import com.serhiiromanchuk.terminal.presentation.getApplicationComponent
 import java.util.Calendar
 import java.util.Locale
@@ -95,20 +96,6 @@ fun TerminalContent(
             terminalState = terminalState,
             lastPrice = it.close
         )
-    }
-}
-
-@Composable
-fun LoadingScreen(
-    modifier: Modifier = Modifier
-) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.Black),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator()
     }
 }
 
