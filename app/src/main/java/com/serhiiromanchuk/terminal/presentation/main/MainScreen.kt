@@ -30,9 +30,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.serhiiromanchuk.terminal.domain.entity.Ticker
+import com.serhiiromanchuk.terminal.domain.entity.Stock
 import com.serhiiromanchuk.terminal.navigation.AppNavGraph
-import com.serhiiromanchuk.terminal.navigation.Screen
 import com.serhiiromanchuk.terminal.navigation.rememberNavigationState
 import com.serhiiromanchuk.terminal.presentation.composables.LoadingScreen
 import com.serhiiromanchuk.terminal.presentation.diagram.Terminal
@@ -51,10 +50,14 @@ fun MainScreen(
             mainScreenContent = {
                 StocksScreen(
                     modifier = modifier.padding(it),
-                    onStockItemClick = { navigationState.navigateTo(Screen.Diagram.route) }
+                    onStockItemClick = { ticker ->
+                        navigationState.navigateToDiagram(ticker)
+                    }
                 )
             },
-            diagramScreenContent = { Terminal() }
+            diagramScreenContent = { ticker ->
+                Terminal(ticker = ticker)
+            }
         )
     }
 }
@@ -62,7 +65,7 @@ fun MainScreen(
 @Composable
 fun StocksScreen(
     modifier: Modifier = Modifier,
-    onStockItemClick: () -> Unit
+    onStockItemClick: (ticker: String) -> Unit
 ) {
     val component = getApplicationComponent()
     val viewModel: MainViewModel = viewModel(factory = component.getViewModelFactory())
@@ -72,8 +75,8 @@ fun StocksScreen(
         is MainScreenState.Content -> {
             MainScreenContent(
                 modifier = modifier,
-                tickers = currentsState.tickers,
-                onItemClick = onStockItemClick
+                stocks = currentsState.tickers,
+                onStockItemClick = onStockItemClick
             )
         }
 
@@ -87,30 +90,30 @@ fun StocksScreen(
 @Composable
 fun MainScreenContent(
     modifier: Modifier = Modifier,
-    tickers: List<Ticker>,
-    onItemClick: () -> Unit
+    stocks: List<Stock>,
+    onStockItemClick: (ticker: String) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
         contentPadding = PaddingValues(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(items = tickers, key = { ticker -> ticker.ticker }) { ticker ->
-            TickerItem(ticker = ticker, onItemClick = onItemClick)
+        items(items = stocks, key = { ticker -> ticker.ticker }) { ticker ->
+            StockItem(stock = ticker, onStockItemClick = onStockItemClick )
         }
     }
 }
 
 @Composable
-fun TickerItem(
+fun StockItem(
     modifier: Modifier = Modifier,
-    ticker: Ticker,
-    onItemClick: () -> Unit
+    stock: Stock,
+    onStockItemClick: (ticker: String) -> Unit
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .clickable { onItemClick() },
+            .clickable { onStockItemClick(stock.ticker) },
         colors = CardDefaults.cardColors(
             containerColor = Color.Black,
             contentColor = Color.White
@@ -123,7 +126,7 @@ fun TickerItem(
         ) {
             Text(
                 modifier = Modifier.weight(1f),
-                text = ticker.name
+                text = stock.name
             )
             Spacer(modifier = Modifier.width(8.dp))
             Box(
@@ -135,7 +138,7 @@ fun TickerItem(
                 contentAlignment = Alignment.Center
             ) {
                 Text(
-                    text = ticker.ticker,
+                    text = stock.ticker,
                     color = Color.Black,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.Bold
@@ -149,6 +152,6 @@ fun TickerItem(
 @Composable
 fun PreviewTickerItem() {
     TerminalTheme {
-        TickerItem(ticker = Ticker(ticker = "AALP", name = "Apple Incorporation"), onItemClick = {})
+        StockItem(stock = Stock(ticker = "AALP", name = "Apple Incorporation"), onStockItemClick = {})
     }
 }

@@ -1,11 +1,11 @@
 package com.serhiiromanchuk.terminal.domain.repository
 
 import com.serhiiromanchuk.terminal.domain.entity.Bar
-import com.serhiiromanchuk.terminal.domain.entity.Ticker
+import com.serhiiromanchuk.terminal.domain.entity.Stock
 import com.serhiiromanchuk.terminal.presentation.diagram.TimeFrame
 
 interface TerminalRepository {
-    suspend fun getBarList(timeFrame: TimeFrame): List<Bar>
+    suspend fun getBarList(timeFrame: TimeFrame, stocksTicker: String): List<Bar>
 
-    suspend fun getTickerList(): List<Ticker>
+    suspend fun getStocksList(): List<Stock>
 }

@@ -1,5 +1,6 @@
 package com.serhiiromanchuk.terminal.presentation.diagram
 
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.rememberTransformableState
@@ -47,7 +48,8 @@ private const val MIN_VISIBLE_VALUE = 20
 
 @Composable
 fun Terminal(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    ticker: String
 ) {
     val component = getApplicationComponent()
     val viewModel: TerminalViewModel = viewModel(factory = component.getViewModelFactory())
@@ -71,7 +73,7 @@ fun Terminal(
             )
             TimeFrames(
                 selectedFrame = currentState.timeFrame,
-                onTimeFrameClick = { viewModel.loadBars(it) })
+                onTimeFrameClick = { viewModel.loadBars(it, ticker) })
         }
     }
 }

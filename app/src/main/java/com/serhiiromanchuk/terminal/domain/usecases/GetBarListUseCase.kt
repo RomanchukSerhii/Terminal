@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetBarListUseCase @Inject constructor(
     private val repository: TerminalRepository
 ) {
-    suspend operator fun invoke(timeFrame: TimeFrame): List<Bar> {
-        return repository.getBarList(timeFrame)
+    suspend operator fun invoke(timeFrame: TimeFrame, stocksTicker: String): List<Bar> {
+        return repository.getBarList(timeFrame, stocksTicker)
     }
 }

@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.serhiiromanchuk.terminal.domain.usecases.GetBarListUseCase
-import com.serhiiromanchuk.terminal.domain.usecases.GetTickerListUseCase
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,15 +23,12 @@ class TerminalViewModel @Inject constructor(
 
     private var lastScreenState: TerminalScreenState = TerminalScreenState.Initial
 
-    init {
-        loadBars()
-    }
-
-    fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR) {
+    fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR, stocksTicker: String) {
+        Log.d("TerminalVieModel", "ticker: $stocksTicker")
         lastScreenState = _screenState.value
         _screenState.value = TerminalScreenState.Loading
         viewModelScope.launch(exceptionHandler) {
-            val barList = getBarListUseCase(timeFrame)
+            val barList = getBarListUseCase(timeFrame, stocksTicker)
             _screenState.value = TerminalScreenState.Content(
                 barList = barList,
                 timeFrame = timeFrame

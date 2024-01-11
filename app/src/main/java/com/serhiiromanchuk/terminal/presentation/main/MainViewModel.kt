@@ -2,14 +2,14 @@ package com.serhiiromanchuk.terminal.presentation.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.serhiiromanchuk.terminal.domain.usecases.GetTickerListUseCase
+import com.serhiiromanchuk.terminal.domain.usecases.GetStocksListUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val getTickerListUseCase: GetTickerListUseCase
+    private val getTickerListUseCase: GetStocksListUseCase
 ) : ViewModel() {
 
     private val _screenState = MutableStateFlow<MainScreenState>(MainScreenState.Initial)

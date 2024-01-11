@@ -9,13 +9,8 @@ import androidx.navigation.compose.rememberNavController
 class NavigationState(
     val navHostController: NavHostController
 ) {
-    fun navigateTo(route: String) {
-        navHostController.navigate(route) {
-            popUpTo(navHostController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            restoreState = true
-        }
+    fun navigateToDiagram(ticker: String) {
+        navHostController.navigate(Screen.Diagram.getRouteWithArgs(ticker))
     }
 }
 

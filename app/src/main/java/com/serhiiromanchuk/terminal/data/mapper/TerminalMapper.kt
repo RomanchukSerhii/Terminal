@@ -3,7 +3,7 @@ package com.serhiiromanchuk.terminal.data.mapper
 import com.serhiiromanchuk.terminal.data.models.ResultsResponseDto
 import com.serhiiromanchuk.terminal.data.models.TickerResponseDto
 import com.serhiiromanchuk.terminal.domain.entity.Bar
-import com.serhiiromanchuk.terminal.domain.entity.Ticker
+import com.serhiiromanchuk.terminal.domain.entity.Stock
 import com.serhiiromanchuk.terminal.presentation.diagram.TimeFrame
 import javax.inject.Inject
 
@@ -26,15 +26,15 @@ class TerminalMapper @Inject constructor() {
         return result
     }
 
-    fun mapTickerResponseToTickers(responseDto: TickerResponseDto): List<Ticker> {
-        val result = mutableListOf<Ticker>()
+    fun mapTickerResponseToTickers(responseDto: TickerResponseDto): List<Stock> {
+        val result = mutableListOf<Stock>()
 
-        responseDto.tickerList.forEach {
-            val ticker = Ticker(
+        responseDto.stocksList.forEach {
+            val stock = Stock(
                 ticker = it.ticker,
                 name = it.name
             )
-            result.add(ticker)
+            result.add(stock)
         }
 
         return result
