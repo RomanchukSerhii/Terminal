@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class TerminalViewModel @Inject constructor(
+class DiagramViewModel @Inject constructor(
+    private val stocksTicker: String,
     private val getBarListUseCase: GetBarListUseCase
 ) : ViewModel() {
 
@@ -21,9 +22,13 @@ class TerminalViewModel @Inject constructor(
         _screenState.value = lastScreenState
     }
 
+    init {
+        loadBars()
+    }
+
     private var lastScreenState: TerminalScreenState = TerminalScreenState.Initial
 
-    fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR, stocksTicker: String) {
+    fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR) {
         Log.d("TerminalVieModel", "ticker: $stocksTicker")
         lastScreenState = _screenState.value
         _screenState.value = TerminalScreenState.Loading

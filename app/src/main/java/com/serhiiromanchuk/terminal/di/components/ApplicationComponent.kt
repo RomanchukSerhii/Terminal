@@ -19,6 +19,8 @@ interface ApplicationComponent {
 
     fun getViewModelFactory(): ViewModelFactory
 
+    fun getDiagramScreenComponent(): DiagramScreenComponent.Factory
+
     @Component.Factory
     interface Factory {
         fun create(

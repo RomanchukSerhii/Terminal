@@ -1,24 +1,20 @@
 package com.serhiiromanchuk.terminal.presentation.diagram
 
-import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.rememberTransformableState
 import androidx.compose.foundation.gestures.transformable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.geometry.Offset
@@ -51,8 +47,8 @@ fun Terminal(
     modifier: Modifier = Modifier,
     ticker: String
 ) {
-    val component = getApplicationComponent()
-    val viewModel: TerminalViewModel = viewModel(factory = component.getViewModelFactory())
+    val component = getApplicationComponent().getDiagramScreenComponent().create(ticker)
+    val viewModel: DiagramViewModel = viewModel(factory = component.getViewModelFactory())
     val screenState = viewModel.screenState.collectAsState()
 
     when (val currentState = screenState.value) {
@@ -73,7 +69,7 @@ fun Terminal(
             )
             TimeFrames(
                 selectedFrame = currentState.timeFrame,
-                onTimeFrameClick = { viewModel.loadBars(it, ticker) })
+                onTimeFrameClick = { viewModel.loadBars(it) })
         }
     }
 }
