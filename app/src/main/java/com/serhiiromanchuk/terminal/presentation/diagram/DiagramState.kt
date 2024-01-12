@@ -10,7 +10,7 @@ import kotlin.math.roundToInt
 
 data class DiagramState(
     val barList: List<Bar>,
-    val visibleBarSize: Int = 100,
+    val visibleBarSize: Int = 40,
     val terminalWidth: Float = 1f,
     val terminalHeight: Float = 1f,
     val scrolledBy: Float = 0f
@@ -59,6 +59,9 @@ data class DiagramState(
 @Composable
 fun rememberTerminalState(barList: List<Bar>): MutableState<DiagramState> {
     return rememberSaveable(saver = DiagramState.Saver) {
-        mutableStateOf(DiagramState(barList))
+        mutableStateOf(DiagramState(
+            barList = barList,
+            visibleBarSize = if (barList.size > 40) 40 else barList.size
+        ))
     }
 }

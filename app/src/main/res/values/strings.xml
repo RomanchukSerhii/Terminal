@@ -4,4 +4,7 @@
     <string name="timeframe_15_minutes">M15</string>
     <string name="timeframe_30_minutes">M30</string>
     <string name="timeframe_1_hours">H1</string>
+    <string name="choose_stock">Choose stock:</string>
+    <string name="stock_search_label">Enter stock name or ticker</string>
+    <string name="clear_search">Clear search</string>
 </resources>
