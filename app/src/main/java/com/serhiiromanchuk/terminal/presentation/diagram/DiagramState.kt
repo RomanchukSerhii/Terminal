@@ -8,7 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import com.serhiiromanchuk.terminal.domain.entity.Bar
 import kotlin.math.roundToInt
 
-data class TerminalState(
+data class DiagramState(
     val barList: List<Bar>,
     val visibleBarSize: Int = 100,
     val terminalWidth: Float = 1f,
@@ -33,7 +33,7 @@ data class TerminalState(
         get() = terminalHeight / (max - min)
 
     companion object {
-        val Saver: Saver<MutableState<TerminalState>, *> = Saver(
+        val Saver: Saver<MutableState<DiagramState>, *> = Saver(
             save = {
                 val terminalState = it.value
                 mapOf(
@@ -44,7 +44,7 @@ data class TerminalState(
                 )
             },
             restore = { values ->
-                val terminalState = TerminalState(
+                val terminalState = DiagramState(
                     barList = values["barList"] as List<Bar>,
                     visibleBarSize = values["visibleBarSize"] as Int,
                     terminalWidth = values["terminalWidth"] as Float,
@@ -57,8 +57,8 @@ data class TerminalState(
 }
 
 @Composable
-fun rememberTerminalState(barList: List<Bar>): MutableState<TerminalState> {
-    return rememberSaveable(saver = TerminalState.Saver) {
-        mutableStateOf(TerminalState(barList))
+fun rememberTerminalState(barList: List<Bar>): MutableState<DiagramState> {
+    return rememberSaveable(saver = DiagramState.Saver) {
+        mutableStateOf(DiagramState(barList))
     }
 }

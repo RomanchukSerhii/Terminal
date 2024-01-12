@@ -1,6 +1,5 @@
 package com.serhiiromanchuk.terminal.presentation.diagram
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.serhiiromanchuk.terminal.domain.usecases.GetBarListUseCase
@@ -15,7 +14,7 @@ class DiagramViewModel @Inject constructor(
     private val getBarListUseCase: GetBarListUseCase
 ) : ViewModel() {
 
-    private val _screenState = MutableStateFlow<TerminalScreenState>(TerminalScreenState.Initial)
+    private val _screenState = MutableStateFlow<DiagramScreenState>(DiagramScreenState.Initial)
     val screenState = _screenState.asStateFlow()
 
     private val exceptionHandler = CoroutineExceptionHandler { _, _ ->
@@ -26,15 +25,15 @@ class DiagramViewModel @Inject constructor(
         loadBars()
     }
 
-    private var lastScreenState: TerminalScreenState = TerminalScreenState.Initial
+    private var lastScreenState: DiagramScreenState = DiagramScreenState.Initial
 
     fun loadBars(timeFrame: TimeFrame = TimeFrame.HOUR) {
-        Log.d("TerminalVieModel", "ticker: $stocksTicker")
         lastScreenState = _screenState.value
-        _screenState.value = TerminalScreenState.Loading
+        _screenState.value = DiagramScreenState.Loading
+
         viewModelScope.launch(exceptionHandler) {
             val barList = getBarListUseCase(timeFrame, stocksTicker)
-            _screenState.value = TerminalScreenState.Content(
+            _screenState.value = DiagramScreenState.Content(
                 barList = barList,
                 timeFrame = timeFrame
             )
