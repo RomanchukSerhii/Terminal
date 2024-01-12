@@ -7,10 +7,12 @@ import retrofit2.http.Path
 
 interface ApiService {
 
-    @GET("v2/aggs/ticker/{stocksTicker}/range/{timeframe}/2022-01-09/2023-01-09?adjusted=true&sort=desc&limit=5000&apiKey=nHyNZGJs2LwKi1tOk9U49IXbVtLm4XRM")
+    @GET("v2/aggs/ticker/{stocksTicker}/range/{timeframe}/{startDate}/{endDate}?adjusted=true&sort=desc&limit=50000&apiKey=nHyNZGJs2LwKi1tOk9U49IXbVtLm4XRM")
     suspend fun loadBars(
         @Path("timeframe") timeFrame: String,
-        @Path("stocksTicker") stocksTicker: String
+        @Path("stocksTicker") stocksTicker: String,
+        @Path("startDate") startDate: String,
+        @Path("endDate") endDate: String,
     ): ResultsResponseDto
 
 

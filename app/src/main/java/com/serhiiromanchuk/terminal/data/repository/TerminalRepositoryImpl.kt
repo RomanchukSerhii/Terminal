@@ -11,10 +11,22 @@ import javax.inject.Inject
 class TerminalRepositoryImpl @Inject constructor(
     private val apiService: ApiService,
     private val mapper: TerminalMapper,
-): TerminalRepository {
-    override suspend fun getBarList(timeFrame: TimeFrame, stocksTicker: String): List<Bar> {
+) : TerminalRepository {
+    override suspend fun getBarList(
+        timeFrame: TimeFrame,
+        stocksTicker: String,
+        startDate: String,
+        endDate: String
+    ): List<Bar> {
         val timeFramePath = mapper.mapTimeFrameToPath(timeFrame)
-        return mapper.mapResponseToBars(apiService.loadBars(timeFramePath, stocksTicker))
+        return mapper.mapResponseToBars(
+            apiService.loadBars(
+                timeFramePath,
+                stocksTicker,
+                startDate,
+                endDate
+            )
+        )
     }
 
     override suspend fun getStocksList(): List<Stock> {

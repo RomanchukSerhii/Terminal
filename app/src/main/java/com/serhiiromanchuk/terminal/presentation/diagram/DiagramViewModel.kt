@@ -7,6 +7,10 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 
 class DiagramViewModel @Inject constructor(
@@ -32,11 +36,21 @@ class DiagramViewModel @Inject constructor(
         _screenState.value = DiagramScreenState.Loading
 
         viewModelScope.launch(exceptionHandler) {
-            val barList = getBarListUseCase(timeFrame, stocksTicker)
+            val calendar = Calendar.getInstance()
+            val endDate = getDate(calendar.timeInMillis)
+            calendar.add(Calendar.MONTH, -6)
+            val startDate = getDate(calendar.timeInMillis)
+
+            val barList = getBarListUseCase(timeFrame, stocksTicker, startDate, endDate)
             _screenState.value = DiagramScreenState.Content(
                 barList = barList,
                 timeFrame = timeFrame
             )
         }
+    }
+
+    private fun getDate(timestamp: Long): String {
+        val date = Date(timestamp)
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 }

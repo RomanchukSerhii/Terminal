@@ -5,7 +5,12 @@ import com.serhiiromanchuk.terminal.domain.entity.Stock
 import com.serhiiromanchuk.terminal.presentation.diagram.TimeFrame
 
 interface TerminalRepository {
-    suspend fun getBarList(timeFrame: TimeFrame, stocksTicker: String): List<Bar>
+    suspend fun getBarList(
+        timeFrame: TimeFrame,
+        stocksTicker: String,
+        startDate: String,
+        endDate: String
+    ): List<Bar>
 
     suspend fun getStocksList(): List<Stock>
 }
