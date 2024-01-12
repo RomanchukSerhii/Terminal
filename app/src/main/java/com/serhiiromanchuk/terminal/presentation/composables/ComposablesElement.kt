@@ -74,15 +74,19 @@ fun SearchStockTextField(
         },
         colors = OutlinedTextFieldDefaults.colors(
             focusedTextColor = Color.White,
+            unfocusedTextColor = Color.White.copy(alpha = 0.6f),
             focusedBorderColor = MaterialTheme.colorScheme.primaryContainer,
             unfocusedBorderColor = Color.White
         ),
         trailingIcon = {
             if (searchRequest.isNotEmpty()) {
-                IconButton(onClick = { searchRequest = "" }) {
+                IconButton(onClick = {
+                    searchRequest = ""
+                    onValueChange("")
+                }) {
                     Icon(
                         imageVector = Icons.Default.Clear,
-                        tint = MaterialTheme.colorScheme.onBackground,
+                        tint = Color.White.copy(alpha = 0.6f),
                         contentDescription = stringResource(R.string.clear_search)
                     )
                 }
